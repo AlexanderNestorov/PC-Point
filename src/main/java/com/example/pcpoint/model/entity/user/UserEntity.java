@@ -13,11 +13,6 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
-    private String firstName;
-
-    @Column(nullable = false)
-    private String lastName;
 
     @Column(nullable = false)
     private String password;
@@ -25,10 +20,10 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String email;
 
-    private boolean isActive;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRoleEntity> roles = new HashSet<>();
+
 
     public String getPassword() {
         return password;
@@ -57,32 +52,6 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public UserEntity setFirstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public UserEntity setLastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public UserEntity setActive(boolean active) {
-        isActive = active;
-        return this;
-    }
 
     public Set<UserRoleEntity> getRoles() {
         return roles;
