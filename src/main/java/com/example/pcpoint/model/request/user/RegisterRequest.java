@@ -1,9 +1,8 @@
-package com.example.pcpoint.model.request;
+package com.example.pcpoint.model.request.user;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 public class RegisterRequest {
 
@@ -19,8 +18,12 @@ public class RegisterRequest {
     private String role;
 
     @NotBlank
-    @Size(min = 6, max = 40)
+    @Size(min = 4, max = 40)
     private String password;
+
+    @NotBlank
+    @Size(min = 4, max = 40)
+    private String confirmPassword;
 
     public String getUsername() {
         return username;
@@ -52,5 +55,14 @@ public class RegisterRequest {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public RegisterRequest setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+        return this;
     }
 }

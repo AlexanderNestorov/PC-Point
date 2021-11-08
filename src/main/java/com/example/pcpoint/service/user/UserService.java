@@ -3,8 +3,8 @@ package com.example.pcpoint.service.user;
 
 import com.example.pcpoint.model.entity.user.UserEntity;
 import com.example.pcpoint.model.response.JwtResponse;
-import com.example.pcpoint.model.service.UserLoginServiceModel;
-import com.example.pcpoint.model.service.UserRegisterServiceModel;
+import com.example.pcpoint.model.service.user.UserLoginServiceModel;
+import com.example.pcpoint.model.service.user.UserRegisterServiceModel;
 
 
 public interface UserService {

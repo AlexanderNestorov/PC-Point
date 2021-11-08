@@ -1,32 +1,31 @@
-package com.example.pcpoint.model.entity.location;
+package com.example.pcpoint.model.service.location;
 
-import com.example.pcpoint.model.entity.BaseEntity;
+public class LocationUpdateServiceModel {
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+    private Long id;
 
-@Entity
-@Table(name = "locations")
-public class Location extends BaseEntity {
-
-    @Column(nullable = false)
     private String city;
 
-    @Column(nullable = false)
     private Double latitude;
 
-    @Column(nullable = false)
     private Double longitude;
 
-    @Column(nullable = false)
     private String address;
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocationUpdateServiceModel setId(Long id) {
+        this.id = id;
+        return this;
+    }
 
     public String getCity() {
         return city;
     }
 
-    public Location setCity(String city) {
+    public LocationUpdateServiceModel setCity(String city) {
         this.city = city;
         return this;
     }
@@ -35,7 +34,7 @@ public class Location extends BaseEntity {
         return latitude;
     }
 
-    public Location setLatitude(Double latitude) {
+    public LocationUpdateServiceModel setLatitude(Double latitude) {
         this.latitude = latitude;
         return this;
     }
@@ -44,7 +43,7 @@ public class Location extends BaseEntity {
         return longitude;
     }
 
-    public Location setLongitude(Double longitude) {
+    public LocationUpdateServiceModel setLongitude(Double longitude) {
         this.longitude = longitude;
         return this;
     }
@@ -53,7 +52,7 @@ public class Location extends BaseEntity {
         return address;
     }
 
-    public Location setAddress(String address) {
+    public LocationUpdateServiceModel setAddress(String address) {
         this.address = address;
         return this;
     }

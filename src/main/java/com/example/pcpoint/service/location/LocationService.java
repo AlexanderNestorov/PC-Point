@@ -1,22 +1,26 @@
 package com.example.pcpoint.service.location;
 
-import com.example.pcpoint.model.entity.location.Location;
+import com.example.pcpoint.model.entity.location.LocationEntity;
+import com.example.pcpoint.model.service.location.LocationAddServiceModel;
+import com.example.pcpoint.model.service.location.LocationUpdateServiceModel;
 
 import java.util.List;
 
 public interface LocationService {
 
-    Location addLocation(Location location);
+    void addLocation(LocationAddServiceModel locationAddServiceModel);
 
-    List<Location> findAllLocations();
+    List<LocationEntity> findAllLocations();
 
-    Location findLocationById(Long id);
+    LocationEntity findLocationById(Long id);
 
-    Location updateLocation(Location location);
+    LocationEntity updateLocation(LocationUpdateServiceModel locationUpdateServiceModel);
 
     void deleteLocation(Long id);
 
-    List<Location> findAllLocationsByCity(String city);
+    List<LocationEntity> findAllLocationsByCity(String city);
 
     List<String> findAllCities();
+
+    void initializeLocations();
 }

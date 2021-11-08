@@ -1,6 +1,4 @@
-package com.example.pcpoint.model.service;
-
-import java.util.Set;
+package com.example.pcpoint.model.service.user;
 
 public class UserRegisterServiceModel {
 

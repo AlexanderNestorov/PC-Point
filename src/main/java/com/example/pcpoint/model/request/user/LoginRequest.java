@@ -1,25 +1,28 @@
-package com.example.pcpoint.model.service;
+package com.example.pcpoint.model.request.user;
 
-public class UserLoginServiceModel {
+import javax.validation.constraints.NotBlank;
 
+public class LoginRequest {
+
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String password;
 
     public String getUsername() {
         return username;
     }
 
-    public UserLoginServiceModel setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
-        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public UserLoginServiceModel setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
-        return this;
     }
 }

@@ -1,11 +1,11 @@
 package com.example.pcpoint.controller;
 
-import com.example.pcpoint.model.request.LoginRequest;
-import com.example.pcpoint.model.request.RegisterRequest;
+import com.example.pcpoint.model.request.user.LoginRequest;
+import com.example.pcpoint.model.request.user.RegisterRequest;
 import com.example.pcpoint.model.response.JwtResponse;
 import com.example.pcpoint.model.response.MessageResponse;
-import com.example.pcpoint.model.service.UserLoginServiceModel;
-import com.example.pcpoint.model.service.UserRegisterServiceModel;
+import com.example.pcpoint.model.service.user.UserLoginServiceModel;
+import com.example.pcpoint.model.service.user.UserRegisterServiceModel;
 import com.example.pcpoint.service.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +43,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+
         if (userService.existsByUsername(registerRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -53,6 +54,12 @@ public class UserController {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
+        }
+
+        if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Passwords do not match!"));
         }
 
         UserRegisterServiceModel userRegisterServiceModel =
