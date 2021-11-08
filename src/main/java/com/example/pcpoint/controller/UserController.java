@@ -4,63 +4,41 @@ import com.example.pcpoint.model.request.LoginRequest;
 import com.example.pcpoint.model.request.RegisterRequest;
 import com.example.pcpoint.model.response.JwtResponse;
 import com.example.pcpoint.model.response.MessageResponse;
+import com.example.pcpoint.model.service.UserLoginServiceModel;
 import com.example.pcpoint.model.service.UserRegisterServiceModel;
-import com.example.pcpoint.security.jwt.JwtUtils;
-import com.example.pcpoint.security.user.UserDetailsImpl;
 import com.example.pcpoint.service.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;;
-import java.util.List;
-
-import java.util.stream.Collectors;
+import javax.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class UserController {
 
-    private final AuthenticationManager authenticationManager;
 
     private final UserService userService;
 
-    private final JwtUtils jwtUtils;
 
     private final ModelMapper modelMapper;
 
-    public UserController(AuthenticationManager authenticationManager, UserService userService, JwtUtils jwtUtils, ModelMapper modelMapper) {
-        this.authenticationManager = authenticationManager;
+    public UserController( UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
-        this.jwtUtils = jwtUtils;
         this.modelMapper = modelMapper;
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        UserLoginServiceModel userLoginServiceModel =
+                modelMapper.map(loginRequest, UserLoginServiceModel.class);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        JwtResponse response = userService.loginUser(userLoginServiceModel);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles));
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
