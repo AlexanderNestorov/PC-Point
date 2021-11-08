@@ -1,5 +1,6 @@
 package com.example.pcpoint.service.user;
 
+import com.example.pcpoint.exception.ItemNotFoundException;
 import com.example.pcpoint.model.entity.user.UserEntity;
 import com.example.pcpoint.model.entity.user.UserRoleEntity;
 import com.example.pcpoint.model.enums.UserRoleEnum;
@@ -18,7 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,6 +43,39 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Override
+    public void initializeUsersAndRoles() {
+        initializeRoles();
+        initializeAdmin();
+    }
+
+    private void initializeAdmin() {
+        if (userRepository.count() == 0) {
+            UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN).orElse(null);
+
+            UserEntity admin = new UserEntity();
+            admin
+                    .setUsername("admin")
+                    .setPassword(passwordEncoder.encode("1234"))
+                    .setEmail("admin@email.com")
+                    .setRoles(new HashSet<>(List.of(adminRole)));
+
+            userRepository.save(admin);
+        }
+    }
+
+    private void initializeRoles() {
+        if (userRoleRepository.count() == 0) {
+            UserRoleEntity adminRole = new UserRoleEntity();
+            adminRole.setRole(UserRoleEnum.ROLE_ADMIN);
+            userRoleRepository.save(adminRole);
+
+            UserRoleEntity userRole = new UserRoleEntity();
+            userRole.setRole(UserRoleEnum.ROLE_USER);
+            userRoleRepository.save(userRole);
+        }
+    }
+
 
     @Override
     public void registerUser(UserRegisterServiceModel userRegisterServiceModel) {
@@ -59,16 +92,16 @@ public class UserServiceImpl implements UserService {
 
         if (strRoles == null) {
             UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new ItemNotFoundException("Error: Role is not found."));
             roles.add(userRole);
         } else {
                 if ("admin".equals(strRoles)) {
                     UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN)
-                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                            .orElseThrow(() -> new ItemNotFoundException("Error: Role is not found."));
                     roles.add(adminRole);
                 } else {
                     UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_USER)
-                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                            .orElseThrow(() -> new ItemNotFoundException("Error: Role is not found."));
                     roles.add(userRole);
                 }
         }
@@ -110,38 +143,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
-    }
-
-    @Override
-    public void initializeUsersAndRoles() {
-        initializeRoles();
-        initializeAdmin();
-    }
-
-    private void initializeAdmin() {
-        if (userRepository.count() == 0) {
-            UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN).orElse(null);
-
-            UserEntity admin = new UserEntity();
-            admin
-                    .setUsername("admin")
-                    .setPassword(passwordEncoder.encode("1234"))
-                    .setEmail("admin@email.com")
-                    .setRoles(new HashSet<>(List.of(adminRole)));
-
-            userRepository.save(admin);
-        }
-    }
-
-    private void initializeRoles() {
-        if (userRoleRepository.count() == 0) {
-            UserRoleEntity adminRole = new UserRoleEntity();
-            adminRole.setRole(UserRoleEnum.ROLE_ADMIN);
-            userRoleRepository.save(adminRole);
-
-            UserRoleEntity userRole = new UserRoleEntity();
-            userRole.setRole(UserRoleEnum.ROLE_USER);
-            userRoleRepository.save(userRole);
-        }
     }
 }
