@@ -10,6 +10,7 @@ import com.example.pcpoint.repository.product.ProductRepository;
 import com.example.pcpoint.repository.product.ProductTypeRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -24,11 +25,59 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void initializeTypes() {
-        initializeTypesPrivate();
+    public void initializeProductsAndTypes() {
+        initializeTypes();
+        initializeProducts();
     }
 
-    private void initializeTypesPrivate() {
+    private void initializeProducts() {
+        if (productRepository.count() == 0) {
+            ProductTypeEntity software = productTypeRepository.findByType(ProductTypeEnum.SOFTWARE).orElse(null);
+            ProductTypeEntity hardware = productTypeRepository.findByType(ProductTypeEnum.HARDWARE).orElse(null);
+            ProductTypeEntity accessory = productTypeRepository.findByType(ProductTypeEnum.ACCESSORY).orElse(null);
+            ProductTypeEntity misc = productTypeRepository.findByType(ProductTypeEnum.MISCELLANEOUS).orElse(null);
+
+            ProductEntity softwareEntity = new ProductEntity();
+            softwareEntity.setName("Software")
+                    .setDescription("Software description")
+                    .setPrice(BigDecimal.valueOf(100))
+                    .setType(software)
+                    .setImageUrl("software.img")
+                    .setQuantity(10);
+
+            ProductEntity hardwareEntity = new ProductEntity();
+            hardwareEntity.setName("Hardware")
+                    .setDescription("Hardware description")
+                    .setPrice(BigDecimal.valueOf(200))
+                    .setType(hardware)
+                    .setImageUrl("hardware.img")
+                    .setQuantity(20);
+
+            ProductEntity accessoryEntity = new ProductEntity();
+            accessoryEntity.setName("Accessory")
+                    .setDescription("Accessory description")
+                    .setPrice(BigDecimal.valueOf(300))
+                    .setType(accessory)
+                    .setImageUrl("accessory.img")
+                    .setQuantity(30);
+
+            ProductEntity miscEntity = new ProductEntity();
+            miscEntity.setName("Misc")
+                    .setDescription("Misc description")
+                    .setPrice(BigDecimal.valueOf(420))
+                    .setType(misc)
+                    .setImageUrl("misc.img")
+                    .setQuantity(42);
+
+
+            productRepository.save(softwareEntity);
+            productRepository.save(hardwareEntity);
+            productRepository.save(accessoryEntity);
+            productRepository.save(miscEntity);
+        }
+    }
+
+    private void initializeTypes() {
             if (productTypeRepository.count() == 0) {
                 ProductTypeEntity software = new ProductTypeEntity();
                 software.setType(ProductTypeEnum.SOFTWARE);
@@ -115,7 +164,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductEntity updateProduct(ProductUpdateServiceModel productUpdateServiceModel) {
         ProductEntity product = productRepository.findById(productUpdateServiceModel.getId())
-                .orElse(null);
+                .orElseThrow(() -> new ItemNotFoundException("Product Entity with id " + productUpdateServiceModel.getId() + " was not found"));
         if (product == null) {
             return null;
         }

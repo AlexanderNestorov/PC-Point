@@ -1,7 +1,6 @@
 package com.example.pcpoint.service.product;
 
 import com.example.pcpoint.model.entity.product.ProductEntity;
-import com.example.pcpoint.model.service.location.LocationUpdateServiceModel;
 import com.example.pcpoint.model.service.product.ProductAddServiceModel;
 import com.example.pcpoint.model.service.product.ProductUpdateServiceModel;
 
@@ -19,6 +18,6 @@ public interface ProductService {
 
     void deleteProduct(Long id);
 
-    void initializeTypes();
+    void initializeProductsAndTypes();
 
 }

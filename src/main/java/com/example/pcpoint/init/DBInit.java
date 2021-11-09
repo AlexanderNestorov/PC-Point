@@ -24,6 +24,6 @@ public class DBInit implements CommandLineRunner {
     public void run(String... args) throws Exception {
         userService.initializeUsersAndRoles();
         locationService.initializeLocations();
-        productService.initializeTypes();
+        productService.initializeProductsAndTypes();
     }
 }
