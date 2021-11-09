@@ -1,11 +1,13 @@
 package com.example.pcpoint.model.service.user;
 
+import java.util.List;
+
 public class UserRegisterServiceModel {
 
     private String username;
     private String password;
     private String email;
-    private String role;
+    private List<String> roles;
 
     public String getUsername() {
         return username;
@@ -34,12 +36,12 @@ public class UserRegisterServiceModel {
         return this;
     }
 
-    public String getRole() {
-        return role;
+    public List<String> getRoles() {
+        return roles;
     }
 
-    public UserRegisterServiceModel setRole(String role) {
-        this.role = role;
+    public UserRegisterServiceModel setRoles(List<String> roles) {
+        this.roles = roles;
         return this;
     }
 }

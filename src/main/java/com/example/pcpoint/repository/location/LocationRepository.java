@@ -1,4 +1,4 @@
-package com.example.pcpoint.repository;
+package com.example.pcpoint.repository.location;
 
 import com.example.pcpoint.model.entity.location.LocationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

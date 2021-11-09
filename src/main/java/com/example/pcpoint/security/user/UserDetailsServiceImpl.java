@@ -1,7 +1,7 @@
 package com.example.pcpoint.security.user;
 
 import com.example.pcpoint.model.entity.user.UserEntity;
-import com.example.pcpoint.repository.UserRepository;
+import com.example.pcpoint.repository.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

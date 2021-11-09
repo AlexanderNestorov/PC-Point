@@ -1,4 +1,4 @@
-package com.example.pcpoint.repository;
+package com.example.pcpoint.repository.user;
 
 import com.example.pcpoint.model.entity.user.UserRoleEntity;
 import com.example.pcpoint.model.enums.UserRoleEnum;

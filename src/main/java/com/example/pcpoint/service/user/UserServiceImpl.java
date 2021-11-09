@@ -7,8 +7,8 @@ import com.example.pcpoint.model.enums.UserRoleEnum;
 import com.example.pcpoint.model.response.JwtResponse;
 import com.example.pcpoint.model.service.user.UserLoginServiceModel;
 import com.example.pcpoint.model.service.user.UserRegisterServiceModel;
-import com.example.pcpoint.repository.UserRepository;
-import com.example.pcpoint.repository.UserRoleRepository;
+import com.example.pcpoint.repository.user.UserRepository;
+import com.example.pcpoint.repository.user.UserRoleRepository;
 import com.example.pcpoint.security.jwt.JwtUtils;
 import com.example.pcpoint.security.user.UserDetailsImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -52,13 +52,14 @@ public class UserServiceImpl implements UserService {
     private void initializeAdmin() {
         if (userRepository.count() == 0) {
             UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN).orElse(null);
+            UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_USER).orElse(null);
 
             UserEntity admin = new UserEntity();
             admin
                     .setUsername("admin")
                     .setPassword(passwordEncoder.encode("1234"))
                     .setEmail("admin@email.com")
-                    .setRoles(new HashSet<>(List.of(adminRole)));
+                    .setRoles(new HashSet<>(List.of(adminRole,userRole)));
 
             userRepository.save(admin);
         }
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserService {
     public void registerUser(UserRegisterServiceModel userRegisterServiceModel) {
         // Create new user's account
         UserEntity user = new UserEntity();
-        String strRoles = userRegisterServiceModel.getRole();
+        List<String> strRoles = userRegisterServiceModel.getRoles();
 
         user.setUsername(userRegisterServiceModel.getUsername())
                 .setEmail(userRegisterServiceModel.getEmail())
@@ -95,15 +96,23 @@ public class UserServiceImpl implements UserService {
                     .orElseThrow(() -> new ItemNotFoundException("Error: Role is not found."));
             roles.add(userRole);
         } else {
-                if ("admin".equals(strRoles)) {
-                    UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN)
-                            .orElseThrow(() -> new ItemNotFoundException("Error: Role is not found."));
-                    roles.add(adminRole);
-                } else {
-                    UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_USER)
-                            .orElseThrow(() -> new ItemNotFoundException("Error: Role is not found."));
-                    roles.add(userRole);
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "ROLE_ADMIN":
+                        UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+
+                        break;
+
+                    case "ROLE_USER":
+                        UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+
+                        break;
                 }
+            });
         }
 
         user.setRoles(roles);

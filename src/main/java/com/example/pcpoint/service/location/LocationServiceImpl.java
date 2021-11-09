@@ -4,7 +4,7 @@ import com.example.pcpoint.exception.ItemNotFoundException;
 import com.example.pcpoint.model.entity.location.LocationEntity;
 import com.example.pcpoint.model.service.location.LocationAddServiceModel;
 import com.example.pcpoint.model.service.location.LocationUpdateServiceModel;
-import com.example.pcpoint.repository.LocationRepository;
+import com.example.pcpoint.repository.location.LocationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
