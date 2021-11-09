@@ -3,6 +3,7 @@ package com.example.pcpoint.model.entity.product;
 import com.example.pcpoint.model.entity.BaseEntity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 
 @Entity
@@ -20,6 +21,9 @@ public class ProductEntity extends BaseEntity {
 
     @Column(nullable = false)
     private int quantity;
+
+    @Column(nullable = false)
+    private BigDecimal price;
 
     @ManyToOne
     private ProductTypeEntity type;
@@ -66,6 +70,15 @@ public class ProductEntity extends BaseEntity {
 
     public ProductEntity setType(ProductTypeEntity type) {
         this.type = type;
+        return this;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public ProductEntity setPrice(BigDecimal price) {
+        this.price = price;
         return this;
     }
 }
