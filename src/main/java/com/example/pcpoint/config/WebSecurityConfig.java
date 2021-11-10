@@ -1,5 +1,6 @@
 package com.example.pcpoint.config;
 
+import com.example.pcpoint.model.enums.UserRoleEnum;
 import com.example.pcpoint.security.jwt.AuthEntryPointJwt;
 import com.example.pcpoint.security.jwt.AuthTokenFilter;
 import com.example.pcpoint.security.user.UserDetailsServiceImpl;
@@ -58,9 +59,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/product/**").permitAll()
+                .antMatchers("/api/location/all").permitAll()
+                .antMatchers("/api/location/find/**").permitAll()
+                .antMatchers("/api/location/delete/**").hasRole("ADMIN")
+                .antMatchers("/api/location/add").hasRole("ADMIN")
+                .antMatchers("/api/location/update").hasRole("ADMIN")
+                .antMatchers("/api/product/all").permitAll()
+                .antMatchers("/api/product/find/**").permitAll()
+                .antMatchers("/api/product/delete/**").hasRole("ADMIN")
+                .antMatchers("/api/product/add").hasRole("ADMIN")
+                .antMatchers("/api/product/update").hasRole("ADMIN")
                 .antMatchers("/api/order/**").permitAll()
-                .antMatchers("/api/location/**").permitAll()
                 .antMatchers("/api/review/**").permitAll()
                 .antMatchers("/","/public/**", "/resources/**","/resources/public/**")
                 .permitAll()
