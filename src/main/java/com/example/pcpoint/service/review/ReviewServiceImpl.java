@@ -31,8 +31,10 @@ public class ReviewServiceImpl implements ReviewService {
 
         reviewEntity
                 .setText(reviewAddServiceModel.getText())
-                .setProduct(productRepository.findById(reviewAddServiceModel.getProduct_id()).orElse(null))
-                .setSeller(userRepository.findById(reviewAddServiceModel.getUser_id()).orElse(null));
+                .setProduct(productRepository.findById(reviewAddServiceModel.getProduct_id())
+                        .orElseThrow(() -> new ItemNotFoundException("Product with id " + reviewAddServiceModel.getProduct_id() + " was not found")))
+                .setSeller(userRepository.findById(reviewAddServiceModel.getUser_id())
+                        .orElseThrow(() -> new ItemNotFoundException("User with id " + reviewAddServiceModel.getUser_id() + " was not found")));
 
 
 
@@ -63,8 +65,10 @@ public class ReviewServiceImpl implements ReviewService {
 
         review
                 .setText(reviewUpdateServiceModel.getText())
-                .setProduct(productRepository.findById(reviewUpdateServiceModel.getProduct_id()).orElse(null))
-                .setSeller(userRepository.findById(reviewUpdateServiceModel.getUser_id()).orElse(null));
+                .setProduct(productRepository.findById(reviewUpdateServiceModel.getProduct_id())
+                        .orElseThrow(() -> new ItemNotFoundException("Product with id " + reviewUpdateServiceModel.getProduct_id() + " was not found")))
+                .setSeller(userRepository.findById(reviewUpdateServiceModel.getUser_id())
+                        .orElseThrow(() -> new ItemNotFoundException("User with id " + reviewUpdateServiceModel.getUser_id() + " was not found")));
 
 
         return reviewRepository.save(review);

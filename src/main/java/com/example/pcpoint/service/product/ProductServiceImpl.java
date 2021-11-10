@@ -32,10 +32,14 @@ public class ProductServiceImpl implements ProductService {
 
     private void initializeProducts() {
         if (productRepository.count() == 0) {
-            ProductTypeEntity software = productTypeRepository.findByType(ProductTypeEnum.SOFTWARE).orElse(null);
-            ProductTypeEntity hardware = productTypeRepository.findByType(ProductTypeEnum.HARDWARE).orElse(null);
-            ProductTypeEntity accessory = productTypeRepository.findByType(ProductTypeEnum.ACCESSORY).orElse(null);
-            ProductTypeEntity misc = productTypeRepository.findByType(ProductTypeEnum.MISCELLANEOUS).orElse(null);
+            ProductTypeEntity software = productTypeRepository.findByType(ProductTypeEnum.SOFTWARE)
+                    .orElseThrow(() -> new ItemNotFoundException("Product Type with type " + ProductTypeEnum.SOFTWARE + " was not found"));
+            ProductTypeEntity hardware = productTypeRepository.findByType(ProductTypeEnum.HARDWARE)
+                    .orElseThrow(() -> new ItemNotFoundException("Product Type with type " + ProductTypeEnum.HARDWARE + " was not found"));
+            ProductTypeEntity accessory = productTypeRepository.findByType(ProductTypeEnum.ACCESSORY)
+                    .orElseThrow(() -> new ItemNotFoundException("Product Type with type " + ProductTypeEnum.ACCESSORY + " was not found"));
+            ProductTypeEntity misc = productTypeRepository.findByType(ProductTypeEnum.MISCELLANEOUS)
+                    .orElseThrow(() -> new ItemNotFoundException("Product Type with type " + ProductTypeEnum.MISCELLANEOUS + " was not found"));
 
             ProductEntity softwareEntity = new ProductEntity();
             softwareEntity.setName("Software")

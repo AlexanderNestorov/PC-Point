@@ -5,7 +5,6 @@ import com.example.pcpoint.model.entity.location.LocationEntity;
 import com.example.pcpoint.model.service.location.LocationAddServiceModel;
 import com.example.pcpoint.model.service.location.LocationUpdateServiceModel;
 import com.example.pcpoint.repository.location.LocationRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +14,9 @@ public class LocationServiceImpl implements LocationService {
 
     private final LocationRepository locationRepository;
 
-    private final ModelMapper modelMapper;
 
-    public LocationServiceImpl(LocationRepository locationRepository, ModelMapper modelMapper) {
+    public LocationServiceImpl(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
-        this.modelMapper = modelMapper;
     }
 
 
@@ -52,7 +49,7 @@ public class LocationServiceImpl implements LocationService {
     public LocationEntity updateLocation(LocationUpdateServiceModel locationUpdateServiceModel) {
 
         LocationEntity location = locationRepository.findById(locationUpdateServiceModel.getId())
-                .orElse(null);
+                .orElseThrow(() -> new ItemNotFoundException("LocationEntity with id " + locationUpdateServiceModel.getId() + " was not found"));
         if (location == null) {
             return null;
         }

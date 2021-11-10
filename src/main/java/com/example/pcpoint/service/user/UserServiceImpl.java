@@ -51,8 +51,10 @@ public class UserServiceImpl implements UserService {
 
     private void initializeAdmin() {
         if (userRepository.count() == 0) {
-            UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN).orElse(null);
-            UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_USER).orElse(null);
+            UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN)
+                    .orElseThrow(() -> new ItemNotFoundException("Error: Admin role is not found."));
+            UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_USER)
+                    .orElseThrow(() -> new ItemNotFoundException("Error: User role is not found."));
 
             UserEntity admin = new UserEntity();
             admin
