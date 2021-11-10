@@ -1,6 +1,5 @@
 package com.example.pcpoint.config;
 
-import com.example.pcpoint.model.enums.UserRoleEnum;
 import com.example.pcpoint.security.jwt.AuthEntryPointJwt;
 import com.example.pcpoint.security.jwt.AuthTokenFilter;
 import com.example.pcpoint.security.user.UserDetailsServiceImpl;
@@ -58,17 +57,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+
+                //Auth endpoints
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+
+                //Location endpoints
                 .antMatchers("/api/location/all").permitAll()
                 .antMatchers("/api/location/find/**").permitAll()
                 .antMatchers("/api/location/delete/**").hasRole("ADMIN")
                 .antMatchers("/api/location/add").hasRole("ADMIN")
                 .antMatchers("/api/location/update").hasRole("ADMIN")
+
+                //Product endpoints
                 .antMatchers("/api/product/all").permitAll()
                 .antMatchers("/api/product/find/**").permitAll()
                 .antMatchers("/api/product/delete/**").hasRole("ADMIN")
                 .antMatchers("/api/product/add").hasRole("ADMIN")
                 .antMatchers("/api/product/update").hasRole("ADMIN")
+
+                //Review endpoints
+
+                .antMatchers("/api/product/all").permitAll()
+                .antMatchers("/api/product/find/**").permitAll()
+                .antMatchers("/api/product/delete/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/product/add").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/product/update").hasAnyRole("ADMIN", "USER")
+
                 .antMatchers("/api/order/**").permitAll()
                 .antMatchers("/api/review/**").permitAll()
                 .antMatchers("/","/public/**", "/resources/**","/resources/public/**")
