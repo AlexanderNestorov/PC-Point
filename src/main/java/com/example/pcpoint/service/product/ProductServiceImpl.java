@@ -110,42 +110,9 @@ public class ProductServiceImpl implements ProductService {
 
         String type = productAddServiceModel.getType();
 
+        productEntity.setType(defineType(type));
 
-        if (type == null) {
-            ProductTypeEntity misc = productTypeRepository.findByType(ProductTypeEnum.MISCELLANEOUS)
-                    .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
-            productEntity.setType(misc);
-        } else {
-                switch (type) {
-                    case "SOFTWARE":
-                        ProductTypeEntity software = productTypeRepository.findByType(ProductTypeEnum.SOFTWARE)
-                                .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
-                        productEntity.setType(software);
 
-                        break;
-
-                    case "HARDWARE":
-                        ProductTypeEntity hardware = productTypeRepository.findByType(ProductTypeEnum.HARDWARE)
-                                .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
-                        productEntity.setType(hardware);
-
-                        break;
-
-                    case "MISCELLANEOUS":
-                        ProductTypeEntity misc = productTypeRepository.findByType(ProductTypeEnum.MISCELLANEOUS)
-                                .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
-                        productEntity.setType(misc);
-
-                        break;
-
-                    case "ACCESSORY":
-                        ProductTypeEntity accessory = productTypeRepository.findByType(ProductTypeEnum.ACCESSORY)
-                                .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
-                        productEntity.setType(accessory);
-
-                        break;
-                }
-            }
 
         productRepository.save(productEntity);
     }
@@ -179,42 +146,8 @@ public class ProductServiceImpl implements ProductService {
 
         String type = productUpdateServiceModel.getType();
 
+        product.setType(defineType(type));
 
-        if (type == null) {
-            ProductTypeEntity misc = productTypeRepository.findByType(ProductTypeEnum.MISCELLANEOUS)
-                    .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
-            product.setType(misc);
-        } else {
-            switch (type) {
-                case "SOFTWARE":
-                    ProductTypeEntity software = productTypeRepository.findByType(ProductTypeEnum.SOFTWARE)
-                            .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
-                    product.setType(software);
-
-                    break;
-
-                case "HARDWARE":
-                    ProductTypeEntity hardware = productTypeRepository.findByType(ProductTypeEnum.HARDWARE)
-                            .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
-                    product.setType(hardware);
-
-                    break;
-
-                case "MISCELLANEOUS":
-                    ProductTypeEntity misc = productTypeRepository.findByType(ProductTypeEnum.MISCELLANEOUS)
-                            .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
-                    product.setType(misc);
-
-                    break;
-
-                case "ACCESSORY":
-                    ProductTypeEntity accessory = productTypeRepository.findByType(ProductTypeEnum.ACCESSORY)
-                            .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
-                    product.setType(accessory);
-
-                    break;
-            }
-        }
 
         return productRepository.save(product);
     }
@@ -223,5 +156,44 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+    public ProductTypeEntity defineType(String type) {
+
+        ProductTypeEntity defined = new ProductTypeEntity();
+
+        if (type == null) {
+            defined = productTypeRepository.findByType(ProductTypeEnum.MISCELLANEOUS)
+                    .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
+        } else {
+            switch (type) {
+                case "SOFTWARE":
+                    defined = productTypeRepository.findByType(ProductTypeEnum.SOFTWARE)
+                            .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
+
+                    break;
+
+                case "HARDWARE":
+                    defined = productTypeRepository.findByType(ProductTypeEnum.HARDWARE)
+                            .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
+
+                    break;
+
+                case "MISCELLANEOUS":
+                    defined = productTypeRepository.findByType(ProductTypeEnum.MISCELLANEOUS)
+                            .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
+
+                    break;
+
+                case "ACCESSORY":
+                    defined = productTypeRepository.findByType(ProductTypeEnum.ACCESSORY)
+                            .orElseThrow(() -> new ItemNotFoundException("Error: Type is not found."));
+
+                    break;
+            }
+        }
+
+        return defined;
+    }
+
 
 }
