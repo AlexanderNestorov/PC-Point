@@ -9,6 +9,7 @@ import com.example.pcpoint.model.service.product.ProductUpdateServiceModel;
 import com.example.pcpoint.service.product.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,7 +35,13 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addProduct(@Valid @RequestBody ProductAddRequest productAddRequest) {
+    public ResponseEntity<?> addProduct(@Valid @RequestBody ProductAddRequest productAddRequest,
+                                        BindingResult bindingResult) {
+
+
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Invalid product request data!"));
+        }
 
         ProductAddServiceModel productAddServiceModel =
                 modelMapper.map(productAddRequest, ProductAddServiceModel.class);
@@ -47,10 +54,15 @@ public class ProductController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductUpdateRequest productUpdateRequest) {
+    public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductUpdateRequest productUpdateRequest,
+                                           BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Invalid product request data!"));
+        }
+
         ProductUpdateServiceModel productUpdateServiceModel =
                 modelMapper.map(productUpdateRequest, ProductUpdateServiceModel.class);
-
 
         ProductEntity updated = productService.updateProduct(productUpdateServiceModel);
 

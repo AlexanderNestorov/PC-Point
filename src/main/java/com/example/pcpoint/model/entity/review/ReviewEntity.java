@@ -20,7 +20,7 @@ public class ReviewEntity extends BaseEntity {
     private ProductEntity product;
 
     @ManyToOne
-    private UserEntity seller;
+    private UserEntity reviewer;
 
     public String getText() {
         return text;
@@ -40,12 +40,12 @@ public class ReviewEntity extends BaseEntity {
         return this;
     }
 
-    public UserEntity getSeller() {
-        return seller;
+    public UserEntity getReviewer() {
+        return reviewer;
     }
 
-    public ReviewEntity setSeller(UserEntity seller) {
-        this.seller = seller;
+    public ReviewEntity setReviewer(UserEntity seller) {
+        this.reviewer = seller;
         return this;
     }
 }

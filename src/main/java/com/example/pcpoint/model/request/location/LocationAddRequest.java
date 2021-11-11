@@ -1,5 +1,6 @@
 package com.example.pcpoint.model.request.location;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
 
@@ -8,12 +9,10 @@ public class LocationAddRequest {
     @NotBlank
     private String city;
 
-    @NotBlank
-    @PositiveOrZero
+    @Min(0)
     private Double latitude;
 
-    @NotBlank
-    @PositiveOrZero
+    @Min(0)
     private Double longitude;
 
     @NotBlank

@@ -1,19 +1,20 @@
 package com.example.pcpoint.model.request.review;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 public class ReviewUpdateRequest {
 
-    @NotBlank
+    @Positive
     private Long id;
 
     @NotBlank
     private String text;
 
-    @NotBlank
+    @Positive
     private Long product_id;
 
-    @NotBlank
+    @Positive
     private Long user_id;
 
     public Long getId() {

@@ -33,7 +33,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .setText(reviewAddServiceModel.getText())
                 .setProduct(productRepository.findById(reviewAddServiceModel.getProduct_id())
                         .orElseThrow(() -> new ItemNotFoundException("Product with id " + reviewAddServiceModel.getProduct_id() + " was not found")))
-                .setSeller(userRepository.findById(reviewAddServiceModel.getUser_id())
+                .setReviewer(userRepository.findById(reviewAddServiceModel.getUser_id())
                         .orElseThrow(() -> new ItemNotFoundException("User with id " + reviewAddServiceModel.getUser_id() + " was not found")));
 
 
@@ -67,7 +67,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .setText(reviewUpdateServiceModel.getText())
                 .setProduct(productRepository.findById(reviewUpdateServiceModel.getProduct_id())
                         .orElseThrow(() -> new ItemNotFoundException("Product with id " + reviewUpdateServiceModel.getProduct_id() + " was not found")))
-                .setSeller(userRepository.findById(reviewUpdateServiceModel.getUser_id())
+                .setReviewer(userRepository.findById(reviewUpdateServiceModel.getUser_id())
                         .orElseThrow(() -> new ItemNotFoundException("User with id " + reviewUpdateServiceModel.getUser_id() + " was not found")));
 
 

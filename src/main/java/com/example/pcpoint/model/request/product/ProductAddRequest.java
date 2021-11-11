@@ -1,9 +1,8 @@
 package com.example.pcpoint.model.request.product;
 
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 public class ProductAddRequest {
@@ -17,12 +16,10 @@ public class ProductAddRequest {
     @NotBlank
     private String imageUrl;
 
-    @NotBlank
-    @PositiveOrZero
+    @Min(0)
     private int quantity;
 
-    @NotBlank
-    @Positive
+    @Min(0)
     private BigDecimal price;
 
     @NotBlank

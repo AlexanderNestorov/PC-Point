@@ -9,6 +9,7 @@ import com.example.pcpoint.model.service.review.ReviewUpdateServiceModel;
 import com.example.pcpoint.service.review.ReviewService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,7 +36,12 @@ public class ReviewController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addReview(@Valid @RequestBody ReviewAddRequest reviewAddRequest) {
+    public ResponseEntity<?> addReview(@Valid @RequestBody ReviewAddRequest reviewAddRequest,
+                                       BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Invalid review request data!"));
+        }
 
         ReviewAddServiceModel reviewAddServiceModel =
                 modelMapper.map(reviewAddRequest, ReviewAddServiceModel.class);
@@ -48,7 +54,13 @@ public class ReviewController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateReview(@Valid @RequestBody ReviewUpdateRequest reviewUpdateRequest) {
+    public ResponseEntity<?> updateReview(@Valid @RequestBody ReviewUpdateRequest reviewUpdateRequest,
+                                          BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Invalid review request data!"));
+        }
+
         ReviewUpdateServiceModel reviewUpdateServiceModel =
                 modelMapper.map(reviewUpdateRequest, ReviewUpdateServiceModel.class);
 

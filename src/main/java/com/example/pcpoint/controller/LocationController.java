@@ -9,6 +9,7 @@ import com.example.pcpoint.model.service.location.LocationUpdateServiceModel;
 import com.example.pcpoint.service.location.LocationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,7 +31,12 @@ public class LocationController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addLocation(@Valid @RequestBody LocationAddRequest locationAddRequest) {
+    public ResponseEntity<?> addLocation(@Valid @RequestBody LocationAddRequest locationAddRequest,
+                                         BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Invalid location request data!"));
+        }
 
         LocationAddServiceModel locationAddServiceModel =
                 modelMapper.map(locationAddRequest, LocationAddServiceModel.class);
@@ -56,7 +62,13 @@ public class LocationController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateLocation(@Valid @RequestBody LocationUpdateRequest locationUpdateRequest) {
+    public ResponseEntity<?> updateLocation(@Valid @RequestBody LocationUpdateRequest locationUpdateRequest,
+                                            BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Invalid location request data!"));
+        }
+
         LocationUpdateServiceModel location =
                 modelMapper.map(locationUpdateRequest, LocationUpdateServiceModel.class);
 
