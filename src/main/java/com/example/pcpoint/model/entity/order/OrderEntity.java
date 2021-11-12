@@ -13,11 +13,11 @@ import java.util.List;
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<ProductEntity> products;
 
     @ManyToOne
-    private UserEntity seller;
+    private UserEntity buyer;
 
     @Column(nullable = false)
     private Instant expected;
@@ -25,7 +25,39 @@ public class OrderEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal total;
 
+    public List<ProductEntity> getProducts() {
+        return products;
+    }
 
+    public OrderEntity setProducts(List<ProductEntity> products) {
+        this.products = products;
+        return this;
+    }
 
+    public UserEntity getBuyer() {
+        return buyer;
+    }
 
+    public OrderEntity setBuyer(UserEntity seller) {
+        this.buyer = seller;
+        return this;
+    }
+
+    public Instant getExpected() {
+        return expected;
+    }
+
+    public OrderEntity setExpected(Instant expected) {
+        this.expected = expected;
+        return this;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public OrderEntity setTotal(BigDecimal total) {
+        this.total = total;
+        return this;
+    }
 }
