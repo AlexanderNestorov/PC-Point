@@ -5,6 +5,7 @@ import com.example.pcpoint.model.entity.user.UserEntity;
 import com.example.pcpoint.model.entity.user.UserRoleEntity;
 import com.example.pcpoint.model.enums.UserRoleEnum;
 import com.example.pcpoint.model.response.JwtResponse;
+import com.example.pcpoint.model.service.user.UpdateRolesServiceModel;
 import com.example.pcpoint.model.service.user.UserLoginServiceModel;
 import com.example.pcpoint.model.service.user.UserRegisterServiceModel;
 import com.example.pcpoint.repository.user.UserRepository;
@@ -49,6 +50,21 @@ public class UserServiceImpl implements UserService {
         initializeAdmin();
     }
 
+    @Override
+    public UserEntity updateRoles(UpdateRolesServiceModel updateRolesServiceModel) {
+        UserEntity user = userRepository.findById(updateRolesServiceModel.getId())
+                .orElseThrow(() -> new ItemNotFoundException("Error: User is not found."));
+
+        List<String> strRoles = updateRolesServiceModel.getRoles();
+
+
+        Set<UserRoleEntity> roles = defineRoles(strRoles);
+
+
+        user.setRoles(roles);
+        return userRepository.save(user);
+    }
+
     private void initializeAdmin() {
         if (userRepository.count() == 0) {
             UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN)
@@ -91,31 +107,7 @@ public class UserServiceImpl implements UserService {
                 .setPassword(encoder.encode(userRegisterServiceModel.getPassword()));
 
 
-        Set<UserRoleEntity> roles = new HashSet<>();
-
-        if (strRoles == null) {
-            UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_USER)
-                    .orElseThrow(() -> new ItemNotFoundException("Error: Role is not found."));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "ROLE_ADMIN":
-                        UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
-
-                        break;
-
-                    case "ROLE_USER":
-                        UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
-
-                        break;
-                }
-            });
-        }
+        Set<UserRoleEntity> roles = defineRoles(strRoles);
 
         user.setRoles(roles);
         userRepository.save(user);
@@ -159,5 +151,36 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    public Set<UserRoleEntity> defineRoles(List<String> strRoles) {
+
+        Set<UserRoleEntity> roles = new HashSet<>();
+
+        if (strRoles == null) {
+            UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_USER)
+                    .orElseThrow(() -> new ItemNotFoundException("Error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "ROLE_ADMIN":
+                        UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+
+                        break;
+
+                    case "ROLE_USER":
+                        UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+
+                        break;
+                }
+            });
+        }
+
+        return roles;
     }
 }
