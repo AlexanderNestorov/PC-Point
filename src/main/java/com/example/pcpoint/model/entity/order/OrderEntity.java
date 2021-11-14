@@ -13,7 +13,10 @@ import java.util.List;
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "order_product",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<ProductEntity> products;
 
     @ManyToOne

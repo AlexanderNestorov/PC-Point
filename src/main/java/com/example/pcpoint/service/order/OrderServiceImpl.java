@@ -97,6 +97,8 @@ public class OrderServiceImpl implements OrderService {
         for (Long productId : products) {
             ProductEntity productEntity = this.productRepository.findById(productId)
                     .orElseThrow(() -> new ItemNotFoundException("Product not found!"));
+            productEntity.setQuantity(productEntity.getQuantity() - 1);
+            productRepository.save(productEntity);
             productEntities.add(productEntity);
         }
         return productEntities;
