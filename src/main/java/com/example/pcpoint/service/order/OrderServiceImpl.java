@@ -3,11 +3,14 @@ package com.example.pcpoint.service.order;
 import com.example.pcpoint.exception.ItemNotFoundException;
 import com.example.pcpoint.model.entity.order.OrderEntity;
 import com.example.pcpoint.model.entity.product.ProductEntity;
-import com.example.pcpoint.model.entity.review.ReviewEntity;
+import com.example.pcpoint.model.entity.product.ProductTypeEntity;
+import com.example.pcpoint.model.entity.user.UserEntity;
+import com.example.pcpoint.model.enums.ProductTypeEnum;
 import com.example.pcpoint.model.service.order.OrderAddServiceModel;
 import com.example.pcpoint.model.service.order.OrderUpdateServiceModel;
 import com.example.pcpoint.repository.order.OrderRepository;
 import com.example.pcpoint.repository.product.ProductRepository;
+import com.example.pcpoint.repository.product.ProductTypeRepository;
 import com.example.pcpoint.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +26,13 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final ProductTypeRepository productTypeRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, UserRepository userRepository, ProductRepository productRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, UserRepository userRepository, ProductRepository productRepository, ProductTypeRepository productTypeRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
+        this.productTypeRepository = productTypeRepository;
     }
 
     @Override
@@ -91,6 +96,60 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
     }
+
+    @Override
+    public int removeExpiredOrders() {
+
+        int count = 0;
+
+        List<OrderEntity> orders = orderRepository.findAll();
+
+        for (OrderEntity order : orders) {
+            if (order.getExpected().isBefore(Instant.now())) {
+                orderRepository.delete(order);
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    @Override
+    public void initializeOrders() {
+            if (productRepository.count() == 0) {
+                ProductTypeEntity software = productTypeRepository.findByType(ProductTypeEnum.SOFTWARE)
+                        .orElseThrow(() -> new ItemNotFoundException("Product Type with type " + ProductTypeEnum.SOFTWARE + " was not found"));
+                ProductTypeEntity hardware = productTypeRepository.findByType(ProductTypeEnum.HARDWARE)
+                        .orElseThrow(() -> new ItemNotFoundException("Product Type with type " + ProductTypeEnum.HARDWARE + " was not found"));
+
+                ProductEntity softwareEntity = new ProductEntity();
+                softwareEntity.setName("Software")
+                        .setDescription("Software description")
+                        .setPrice(BigDecimal.valueOf(100))
+                        .setType(software)
+                        .setImageUrl("software.img")
+                        .setQuantity(10);
+
+                ProductEntity hardwareEntity = new ProductEntity();
+                hardwareEntity.setName("Hardware")
+                        .setDescription("Hardware description")
+                        .setPrice(BigDecimal.valueOf(200))
+                        .setType(hardware)
+                        .setImageUrl("hardware.img")
+                        .setQuantity(20);
+
+                UserEntity user = userRepository.findById(1L).orElseThrow(() -> new ItemNotFoundException("User with id 1 was not found"));
+
+                OrderEntity orderEntity = new OrderEntity();
+
+                orderEntity.setBuyer(user)
+                        .setTotal(calculateTotal(List.of(softwareEntity, hardwareEntity)))
+                        .setProducts(List.of(softwareEntity, hardwareEntity))
+                        .setExpected(Instant.now().plus(3, ChronoUnit.DAYS));
+
+                orderRepository.save(orderEntity);
+            }
+        }
 
     private List<ProductEntity> defineProducts(List<Long> products) {
         List<ProductEntity> productEntities = new ArrayList<>();

@@ -17,4 +17,8 @@ public interface OrderService {
     OrderEntity updateOrder(OrderUpdateServiceModel orderUpdateServiceModel);
 
     void deleteOrder(Long id);
+
+    int removeExpiredOrders();
+
+    void initializeOrders();
 }
