@@ -1,6 +1,5 @@
 package com.example.pcpoint.scheduler;
 
-import com.example.pcpoint.security.jwt.AuthEntryPointJwt;
 import com.example.pcpoint.service.order.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void initializeUsersAndRoles() {
         initializeRoles();
-        initializeAdmin();
+        initializeAdminAndUser();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    private void initializeAdmin() {
+    private void initializeAdminAndUser() {
         if (userRepository.count() == 0) {
             UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ROLE_ADMIN)
                     .orElseThrow(() -> new ItemNotFoundException("Error: Admin role is not found."));
@@ -80,6 +80,16 @@ public class UserServiceImpl implements UserService {
                     .setRoles(new HashSet<>(List.of(adminRole,userRole)));
 
             userRepository.save(admin);
+
+            UserEntity user = new UserEntity();
+            user
+                    .setUsername("user")
+                    .setPassword(passwordEncoder.encode("1234"))
+                    .setEmail("user@email.com")
+                    .setRoles(new HashSet<>(List.of(userRole)));
+
+
+            userRepository.save(user);
         }
     }
 
