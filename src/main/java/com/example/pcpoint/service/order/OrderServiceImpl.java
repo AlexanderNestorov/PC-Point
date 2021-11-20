@@ -116,29 +116,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void initializeOrders() {
-            if (productRepository.count() == 0) {
-                ProductTypeEntity software = productTypeRepository.findByType(ProductTypeEnum.SOFTWARE)
-                        .orElseThrow(() -> new ItemNotFoundException("Product Type with type " + ProductTypeEnum.SOFTWARE + " was not found"));
-                ProductTypeEntity hardware = productTypeRepository.findByType(ProductTypeEnum.HARDWARE)
-                        .orElseThrow(() -> new ItemNotFoundException("Product Type with type " + ProductTypeEnum.HARDWARE + " was not found"));
-
-                ProductEntity softwareEntity = new ProductEntity();
-                softwareEntity.setName("Software")
-                        .setDescription("Software description")
-                        .setPrice(BigDecimal.valueOf(100))
-                        .setType(software)
-                        .setImageUrl("software.img")
-                        .setQuantity(10);
-
-                ProductEntity hardwareEntity = new ProductEntity();
-                hardwareEntity.setName("Hardware")
-                        .setDescription("Hardware description")
-                        .setPrice(BigDecimal.valueOf(200))
-                        .setType(hardware)
-                        .setImageUrl("hardware.img")
-                        .setQuantity(20);
+            if (orderRepository.count() == 0) {
 
                 UserEntity user = userRepository.findById(1L).orElseThrow(() -> new ItemNotFoundException("User with id 1 was not found"));
+
+                ProductEntity softwareEntity = productRepository.findById(1L).orElseThrow(() -> new ItemNotFoundException("Product with id 1 was not found"));
+                ProductEntity hardwareEntity = productRepository.findById(2L).orElseThrow(() -> new ItemNotFoundException("Product with id 2 was not found"));
 
                 OrderEntity orderEntity = new OrderEntity();
 
