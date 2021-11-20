@@ -84,4 +84,11 @@ public class OrderController {
 
         return ResponseEntity.ok(new MessageResponse("Order deleted successfully!"));
     }
+
+    @GetMapping("/by_user/{id}")
+    public ResponseEntity<?> getAllOrdersByUser(@PathVariable("id") Long id) {
+        List<OrderEntity> orders = this.orderService.findAllOrdersByBuyer(id);
+        return ResponseEntity.ok(orders);
+    }
+
 }

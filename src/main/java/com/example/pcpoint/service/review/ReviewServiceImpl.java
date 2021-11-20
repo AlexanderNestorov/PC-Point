@@ -37,7 +37,6 @@ public class ReviewServiceImpl implements ReviewService {
                         .orElseThrow(() -> new ItemNotFoundException("User with id " + reviewAddServiceModel.getUser_id() + " was not found")));
 
 
-
         reviewRepository.save(reviewEntity);
     }
 
@@ -60,9 +59,6 @@ public class ReviewServiceImpl implements ReviewService {
             return null;
         }
 
-
-
-
         review
                 .setText(reviewUpdateServiceModel.getText())
                 .setProduct(productRepository.findById(reviewUpdateServiceModel.getProduct_id())
@@ -77,5 +73,20 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void deleteReview(Long id) {
         reviewRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ReviewEntity> findAllReviewsByProductId(Long userId) {
+        return reviewRepository.findAllByProductId(userId);
+    }
+
+    @Override
+    public List<ReviewEntity> findAllReviewsByUserId(Long userId) {
+        return reviewRepository.findAllByReviewer(userId);
+    }
+
+    @Override
+    public void deleteAllReviewsByProductId(Long productId) {
+        reviewRepository.deleteByProduct(productId);
     }
 }

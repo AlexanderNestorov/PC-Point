@@ -3,14 +3,11 @@ package com.example.pcpoint.service.order;
 import com.example.pcpoint.exception.ItemNotFoundException;
 import com.example.pcpoint.model.entity.order.OrderEntity;
 import com.example.pcpoint.model.entity.product.ProductEntity;
-import com.example.pcpoint.model.entity.product.ProductTypeEntity;
 import com.example.pcpoint.model.entity.user.UserEntity;
-import com.example.pcpoint.model.enums.ProductTypeEnum;
 import com.example.pcpoint.model.service.order.OrderAddServiceModel;
 import com.example.pcpoint.model.service.order.OrderUpdateServiceModel;
 import com.example.pcpoint.repository.order.OrderRepository;
 import com.example.pcpoint.repository.product.ProductRepository;
-import com.example.pcpoint.repository.product.ProductTypeRepository;
 import com.example.pcpoint.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +23,11 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
-    private final ProductTypeRepository productTypeRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, UserRepository userRepository, ProductRepository productRepository, ProductTypeRepository productTypeRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, UserRepository userRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
-        this.productTypeRepository = productTypeRepository;
     }
 
     @Override
@@ -133,6 +128,11 @@ public class OrderServiceImpl implements OrderService {
                 orderRepository.save(orderEntity);
             }
         }
+
+    @Override
+    public List<OrderEntity> findAllOrdersByBuyer(Long id) {
+        return orderRepository.findAllByBuyer_Id(id);
+    }
 
     private List<ProductEntity> defineProducts(List<Long> products) {
         List<ProductEntity> productEntities = new ArrayList<>();

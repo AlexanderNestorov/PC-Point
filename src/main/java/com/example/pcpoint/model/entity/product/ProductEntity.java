@@ -28,6 +28,7 @@ public class ProductEntity extends BaseEntity {
     @ManyToOne
     private ProductTypeEntity type;
 
+
     public String getName() {
         return name;
     }
@@ -81,4 +82,5 @@ public class ProductEntity extends BaseEntity {
         this.price = price;
         return this;
     }
+
 }

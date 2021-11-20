@@ -79,20 +79,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/product/update").hasRole("ADMIN")
 
                 //Review endpoints
+                .antMatchers("/api/review/all").permitAll()
+                .antMatchers("/api/review/find/**").permitAll()
+                .antMatchers("/api/review/delete/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/review/add").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/review/update").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/review/by_product/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/review/by_user/**").hasAnyRole("ADMIN", "USER")
 
-                .antMatchers("/api/product/all").permitAll()
-                .antMatchers("/api/product/find/**").permitAll()
-                .antMatchers("/api/product/delete/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/api/product/add").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/api/product/update").hasAnyRole("ADMIN", "USER")
-
+                //Order endpoints
                 .antMatchers("/api/order/all").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/api/order/find/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/api/order/delete/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/api/order/add").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/api/order/update").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/order/by_user/**").hasAnyRole("ADMIN", "USER")
 
-                .antMatchers("/api/review/**").permitAll()
                 .antMatchers("/","/public/**", "/resources/**","/resources/public/**")
                 .permitAll()
                 .antMatchers(HttpMethod.GET).permitAll()

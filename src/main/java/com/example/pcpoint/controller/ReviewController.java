@@ -85,4 +85,16 @@ public class ReviewController {
 
         return ResponseEntity.ok(new MessageResponse("Review deleted successfully!"));
     }
+
+    @GetMapping("/by_product/{id}")
+    public ResponseEntity<?> getReviewsByProductId(@PathVariable("id") Long id) {
+        List<ReviewEntity> reviews = this.reviewService.findAllReviewsByProductId(id);
+        return ResponseEntity.ok(reviews);
+    }
+
+    @GetMapping("/by_user/{id}")
+    public ResponseEntity<?> getReviewsByUserId(@PathVariable("id") Long id) {
+        List<ReviewEntity> reviews = this.reviewService.findAllReviewsByUserId(id);
+        return ResponseEntity.ok(reviews);
+    }
 }

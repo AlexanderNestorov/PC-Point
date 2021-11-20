@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class ApplicationConfig {
 
-
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();

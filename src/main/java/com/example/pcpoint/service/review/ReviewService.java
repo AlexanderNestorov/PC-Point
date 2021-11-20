@@ -17,4 +17,10 @@ public interface ReviewService {
     ReviewEntity updateReview(ReviewUpdateServiceModel reviewUpdateServiceModel);
 
     void deleteReview(Long id);
+
+    List<ReviewEntity> findAllReviewsByProductId(Long id);
+
+    List<ReviewEntity> findAllReviewsByUserId(Long id);
+
+    void deleteAllReviewsByProductId(Long id);
 }
