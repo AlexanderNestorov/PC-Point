@@ -19,7 +19,7 @@ public class LocationEntity extends BaseEntity {
     @Column(nullable = false)
     private Double longitude;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String address;
 
     public String getCity() {

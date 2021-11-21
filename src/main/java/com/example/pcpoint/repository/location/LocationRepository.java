@@ -17,10 +17,15 @@ public interface LocationRepository extends JpaRepository<LocationEntity, Long> 
             nativeQuery = true
     )
     List<LocationEntity> findAllByCity(String city);
-
     @Query(
             value = "SELECT DISTINCT l.city FROM locations l",
             nativeQuery = true
     )
     List<String> findAllCities();
+
+    @Query(
+            value = "SELECT * from locations l WHERE l.address = ?1",
+            nativeQuery = true
+    )
+    LocationEntity findByAddress(String address);
 }
