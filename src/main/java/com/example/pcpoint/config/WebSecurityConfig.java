@@ -80,7 +80,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //Review endpoints
                 .antMatchers("/api/review/all").permitAll()
-                .antMatchers("/api/review/find/**").permitAll()
                 .antMatchers("/api/review/delete/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/api/review/add").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/api/review/update").hasAnyRole("ADMIN", "USER")

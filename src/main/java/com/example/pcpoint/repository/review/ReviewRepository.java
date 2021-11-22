@@ -15,6 +15,8 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
 
     Optional<ReviewEntity> findReviewById(Long id);
 
+    Optional<ReviewEntity> findReviewEntityByText(String text);
+
     @Query(
             value = "SELECT * from reviews r WHERE r.product_id = ?1",
             nativeQuery = true

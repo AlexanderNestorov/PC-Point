@@ -6,7 +6,9 @@ import com.example.pcpoint.model.request.review.ReviewUpdateRequest;
 import com.example.pcpoint.model.response.MessageResponse;
 import com.example.pcpoint.model.service.review.ReviewAddServiceModel;
 import com.example.pcpoint.model.service.review.ReviewUpdateServiceModel;
+import com.example.pcpoint.service.product.ProductService;
 import com.example.pcpoint.service.review.ReviewService;
+import com.example.pcpoint.service.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -24,9 +26,15 @@ public class ReviewController {
 
     private final ModelMapper modelMapper;
 
-    public ReviewController(ReviewService reviewService, ModelMapper modelMapper) {
+    private final ProductService productService;
+
+    private final UserService userService;
+
+    public ReviewController(ReviewService reviewService, ModelMapper modelMapper, ProductService productService, UserService userService) {
         this.reviewService = reviewService;
         this.modelMapper = modelMapper;
+        this.productService = productService;
+        this.userService = userService;
     }
 
     @GetMapping("/all")
@@ -88,12 +96,26 @@ public class ReviewController {
 
     @GetMapping("/by_product/{id}")
     public ResponseEntity<?> getReviewsByProductId(@PathVariable("id") Long id) {
+
+        Long product = this.productService.findProductById(id).getId();
+
+        if (product == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         List<ReviewEntity> reviews = this.reviewService.findAllReviewsByProductId(id);
         return ResponseEntity.ok(reviews);
     }
 
     @GetMapping("/by_user/{id}")
     public ResponseEntity<?> getReviewsByUserId(@PathVariable("id") Long id) {
+
+        Long user = this.userService.findById(id).getId();
+
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         List<ReviewEntity> reviews = this.reviewService.findAllReviewsByUserId(id);
         return ResponseEntity.ok(reviews);
     }

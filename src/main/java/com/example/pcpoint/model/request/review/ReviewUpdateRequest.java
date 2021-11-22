@@ -1,6 +1,7 @@
 package com.example.pcpoint.model.request.review;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 public class ReviewUpdateRequest {
@@ -12,9 +13,11 @@ public class ReviewUpdateRequest {
     private String text;
 
     @Positive
+    @NotNull
     private Long product_id;
 
     @Positive
+    @NotNull
     private Long user_id;
 
     public Long getId() {

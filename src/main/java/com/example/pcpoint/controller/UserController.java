@@ -77,19 +77,19 @@ public class UserController {
         if (userService.existsByUsername(registerRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .body(new MessageResponse("Username is already taken!"));
         }
 
         if (userService.existsByEmail(registerRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+                    .body(new MessageResponse("Email is already in use!"));
         }
 
         if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Passwords do not match!"));
+                    .body(new MessageResponse("Passwords do not match!"));
         }
 
         UserRegisterServiceModel userRegisterServiceModel =
