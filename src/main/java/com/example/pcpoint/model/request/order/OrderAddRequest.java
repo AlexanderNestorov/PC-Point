@@ -3,12 +3,14 @@ package com.example.pcpoint.model.request.order;
 
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
 public class OrderAddRequest {
 
     @Positive
+    @NotNull
     private Long buyer;
 
     @Valid

@@ -7,6 +7,7 @@ import com.example.pcpoint.model.response.MessageResponse;
 import com.example.pcpoint.model.service.order.OrderAddServiceModel;
 import com.example.pcpoint.model.service.order.OrderUpdateServiceModel;
 import com.example.pcpoint.service.order.OrderService;
+import com.example.pcpoint.service.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -22,10 +23,12 @@ public class OrderController {
 
     private final OrderService orderService;
     private final ModelMapper modelMapper;
+    private final UserService userService;
 
-    public OrderController(OrderService orderService, ModelMapper modelMapper) {
+    public OrderController(OrderService orderService, ModelMapper modelMapper, UserService userService) {
         this.orderService = orderService;
         this.modelMapper = modelMapper;
+        this.userService = userService;
     }
 
     @GetMapping("/all")
@@ -94,6 +97,12 @@ public class OrderController {
 
     @GetMapping("/by_user/{id}")
     public ResponseEntity<?> getAllOrdersByUser(@PathVariable("id") Long id) {
+
+        Long userId = userService.findById(id).getId();
+
+        if(userId == null){
+            return ResponseEntity.notFound().build();
+        }
         List<OrderEntity> orders = this.orderService.findAllOrdersByBuyer(id);
         return ResponseEntity.ok(orders);
     }

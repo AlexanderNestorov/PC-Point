@@ -1,11 +1,8 @@
 package com.example.pcpoint.controller;
 
 import com.example.pcpoint.exception.ItemNotFoundException;
-import com.example.pcpoint.model.entity.location.LocationEntity;
 import com.example.pcpoint.model.entity.product.ProductEntity;
 import com.example.pcpoint.model.entity.product.ProductTypeEntity;
-import com.example.pcpoint.model.request.location.LocationAddRequest;
-import com.example.pcpoint.model.request.location.LocationUpdateRequest;
 import com.example.pcpoint.model.request.product.ProductAddRequest;
 import com.example.pcpoint.model.request.product.ProductUpdateRequest;
 import com.example.pcpoint.model.response.JwtResponse;
