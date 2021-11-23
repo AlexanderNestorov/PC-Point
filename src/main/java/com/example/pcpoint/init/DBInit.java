@@ -14,13 +14,11 @@ public class DBInit implements CommandLineRunner {
     private final UserService userService;
     private final LocationService locationService;
     private final ProductService productService;
-    private final OrderService orderService;
 
-    public DBInit(UserService userService, LocationService locationService, ProductService productService, OrderService orderService) {
+    public DBInit(UserService userService, LocationService locationService, ProductService productService) {
         this.userService = userService;
         this.locationService = locationService;
         this.productService = productService;
-        this.orderService = orderService;
     }
 
     @Override
@@ -28,6 +26,5 @@ public class DBInit implements CommandLineRunner {
         userService.initializeUsersAndRoles();
         locationService.initializeLocations();
         productService.initializeProductsAndTypes();
-        orderService.initializeOrders();
     }
 }

@@ -7,6 +7,7 @@ import com.example.pcpoint.model.response.MessageResponse;
 import com.example.pcpoint.model.service.product.ProductAddServiceModel;
 import com.example.pcpoint.model.service.product.ProductUpdateServiceModel;
 import com.example.pcpoint.service.product.ProductService;
+import com.example.pcpoint.service.review.ReviewService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -22,16 +23,25 @@ public class ProductController {
 
     private final ModelMapper modelMapper;
     private final ProductService productService;
+    private final ReviewService reviewService;
 
-    public ProductController(ModelMapper modelMapper, ProductService productService) {
+    public ProductController(ModelMapper modelMapper, ProductService productService, ReviewService reviewService) {
         this.modelMapper = modelMapper;
         this.productService = productService;
+        this.reviewService = reviewService;
     }
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllProducts() {
         List<ProductEntity> products = this.productService.findAllProducts();
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<?> getLocationById(@PathVariable("id") Long id) {
+        ProductEntity productEntity = this.productService.findProductById(id);
+
+        return ResponseEntity.ok(productEntity);
     }
 
     @PostMapping("/add")
@@ -81,6 +91,7 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
 
+        this.reviewService.deleteAllReviewsByProductId(id);
         this.productService.deleteProduct(id);
 
         return ResponseEntity.ok(new MessageResponse("Product deleted successfully!"));

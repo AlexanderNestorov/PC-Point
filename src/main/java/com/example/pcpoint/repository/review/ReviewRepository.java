@@ -32,7 +32,7 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
     @Modifying
     @Transactional
     @Query(
-            value = "DELETE from reviews r WHERE r.product_id = ?1",
+            value = "DELETE from reviews where product_id = ?1",
             nativeQuery = true
     )
     void deleteByProduct(Long productId);

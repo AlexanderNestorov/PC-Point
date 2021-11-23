@@ -20,7 +20,5 @@ public interface OrderService {
 
     int removeExpiredOrders();
 
-    void initializeOrders();
-
     List<OrderEntity> findAllOrdersByBuyer(Long id);
 }

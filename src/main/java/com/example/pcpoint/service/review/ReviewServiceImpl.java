@@ -87,6 +87,11 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void deleteAllReviewsByProductId(Long productId) {
-        reviewRepository.deleteByProduct(productId);
+
+        if (reviewRepository.findAllByProductId(productId) == null) {
+            throw new ItemNotFoundException("Product with id " + productId + " was not found");
+        } else {
+            reviewRepository.deleteByProduct(productId);
+        }
     }
 }

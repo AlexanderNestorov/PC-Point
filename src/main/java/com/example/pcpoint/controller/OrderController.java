@@ -34,6 +34,13 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
+    @GetMapping("/find/{id}")
+    public ResponseEntity<?> getLocationById(@PathVariable("id") Long id) {
+        OrderEntity order = this.orderService.findOrderById(id);
+
+        return ResponseEntity.ok(order);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<?> addOrder(@Valid @RequestBody OrderAddRequest orderAddRequest,
                                        BindingResult bindingResult) {

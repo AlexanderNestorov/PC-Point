@@ -110,26 +110,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void initializeOrders() {
-            if (orderRepository.count() == 0) {
-
-                UserEntity user = userRepository.findById(1L).orElseThrow(() -> new ItemNotFoundException("User with id 1 was not found"));
-
-                ProductEntity softwareEntity = productRepository.findById(1L).orElseThrow(() -> new ItemNotFoundException("Product with id 1 was not found"));
-                ProductEntity hardwareEntity = productRepository.findById(2L).orElseThrow(() -> new ItemNotFoundException("Product with id 2 was not found"));
-
-                OrderEntity orderEntity = new OrderEntity();
-
-                orderEntity.setBuyer(user)
-                        .setTotal(calculateTotal(List.of(softwareEntity, hardwareEntity)))
-                        .setProducts(List.of(softwareEntity, hardwareEntity))
-                        .setExpected(Instant.now().plus(3, ChronoUnit.DAYS));
-
-                orderRepository.save(orderEntity);
-            }
-        }
-
-    @Override
     public List<OrderEntity> findAllOrdersByBuyer(Long id) {
         return orderRepository.findAllByBuyer_Id(id);
     }

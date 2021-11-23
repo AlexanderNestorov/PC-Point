@@ -9,6 +9,7 @@ import com.example.pcpoint.model.service.product.ProductUpdateServiceModel;
 import com.example.pcpoint.repository.product.ProductRepository;
 import com.example.pcpoint.repository.product.ProductTypeRepository;
 import com.example.pcpoint.repository.review.ReviewRepository;
+import com.example.pcpoint.service.review.ReviewService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,12 +20,13 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductTypeRepository productTypeRepository;
-    private final ReviewRepository reviewRepository;
+    private final ReviewService reviewService;
 
-    public ProductServiceImpl(ProductRepository productRepository, ProductTypeRepository productTypeRepository, ReviewRepository reviewRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, ProductTypeRepository productTypeRepository,
+                              ReviewService reviewService) {
         this.productRepository = productRepository;
         this.productTypeRepository = productTypeRepository;
-        this.reviewRepository = reviewRepository;
+        this.reviewService = reviewService;
     }
 
     @Override
@@ -162,8 +164,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(Long id) {
 
-        reviewRepository.deleteByProduct(id);
-        productRepository.deleteById(id);
+        reviewService.deleteAllReviewsByProductId(id);
+        productRepository.deleteProductEntityById(id);
     }
 
     public ProductTypeEntity defineType(String type) {
