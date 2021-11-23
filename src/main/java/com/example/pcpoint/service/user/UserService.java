@@ -10,7 +10,7 @@ import com.example.pcpoint.model.service.user.UserRegisterServiceModel;
 
 public interface UserService {
 
-    void registerUser(UserRegisterServiceModel userRegisterServiceModel);
+    UserEntity registerUser(UserRegisterServiceModel userRegisterServiceModel);
 
     JwtResponse loginUser(UserLoginServiceModel userLoginServiceModel);
 

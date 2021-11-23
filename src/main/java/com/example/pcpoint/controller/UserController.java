@@ -96,10 +96,10 @@ public class UserController {
                 modelMapper.map(registerRequest, UserRegisterServiceModel.class);
 
 
-        userService.registerUser(userRegisterServiceModel);
+        UserEntity added = userService.registerUser(userRegisterServiceModel);
 
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(added);
     }
 
 }

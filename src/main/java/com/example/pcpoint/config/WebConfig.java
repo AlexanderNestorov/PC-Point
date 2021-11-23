@@ -1,6 +1,6 @@
 package com.example.pcpoint.config;
 
-import com.example.pcpoint.controller.email.EmailInterceptor;
+import com.example.pcpoint.controller.logger.LoggerInterceptor;
 import com.example.pcpoint.controller.stats.StatsInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -10,16 +10,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     private final StatsInterceptor statsInterceptor;
-    private final EmailInterceptor emailInterceptor;
+    private final LoggerInterceptor loggerInterceptor;
 
-    public WebConfig(StatsInterceptor statsInterceptor, EmailInterceptor emailInterceptor) {
+    public WebConfig(StatsInterceptor statsInterceptor, LoggerInterceptor loggerInterceptor) {
         this.statsInterceptor = statsInterceptor;
-        this.emailInterceptor = emailInterceptor;
+        this.loggerInterceptor = loggerInterceptor;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(statsInterceptor);
-        registry.addInterceptor(emailInterceptor).addPathPatterns("/api/auth/register");
+        registry.addInterceptor(loggerInterceptor);
     }
 }

@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void registerUser(UserRegisterServiceModel userRegisterServiceModel) {
+    public UserEntity registerUser(UserRegisterServiceModel userRegisterServiceModel) {
         // Create new user's account
         UserEntity user = new UserEntity();
         List<String> strRoles = userRegisterServiceModel.getRoles();
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
         Set<UserRoleEntity> roles = defineRoles(strRoles);
 
         user.setRoles(roles);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override
