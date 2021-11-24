@@ -90,14 +90,14 @@ public class LocationServiceImpl implements LocationService {
             locationEntityPlovidv
                     .setCity("Plovdiv")
                     .setAddress("Eliezer Kalev 15")
-                    .setLatitude(42.151648)
-                    .setLongitude(24.738892);
+                    .setLatitude(42.12817534624463)
+                    .setLongitude(24.74552395966985);
 
             locationEntitySofia
                     .setCity("Sofia")
                     .setAddress("Rusalka 3")
-                    .setLatitude(42.6977)
-                    .setLongitude(23.3219);
+                    .setLatitude(42.66720525691555)
+                    .setLongitude(23.362304667621743);
 
 
             locationRepository.saveAll(List.of(locationEntityPlovidv,locationEntitySofia));

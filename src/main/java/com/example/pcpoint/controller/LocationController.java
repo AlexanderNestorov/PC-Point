@@ -93,5 +93,17 @@ public class LocationController {
 
         return ResponseEntity.ok(new MessageResponse("Location deleted successfully!"));
     }
+
+    @GetMapping("/by_city/{city}")
+    public ResponseEntity<?> getAllLocationsByCity(@PathVariable("city") String city) {
+        List<LocationEntity> locations = this.locationService.findAllLocationsByCity(city);
+        return ResponseEntity.ok(locations);
+    }
+
+    @GetMapping("/cities")
+    public ResponseEntity<?> getAllCities() {
+        List<String> locations = this.locationService.findAllCities();
+        return ResponseEntity.ok(locations);
+    }
 }
 
