@@ -1,7 +1,7 @@
 package com.example.pcpoint.config;
 
-import com.example.pcpoint.controller.logger.LoggerInterceptor;
-import com.example.pcpoint.controller.stats.StatsInterceptor;
+import com.example.pcpoint.controller.interceptor.LoggerInterceptor;
+import com.example.pcpoint.controller.interceptor.StatsInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

@@ -1,6 +1,5 @@
-package com.example.pcpoint.controller.stats;
+package com.example.pcpoint.controller;
 
-import com.example.pcpoint.model.entity.order.OrderEntity;
 import com.example.pcpoint.service.stats.StatsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

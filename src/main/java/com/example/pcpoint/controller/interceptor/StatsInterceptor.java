@@ -1,4 +1,4 @@
-package com.example.pcpoint.controller.stats;
+package com.example.pcpoint.controller.interceptor;
 
 import com.example.pcpoint.service.stats.StatsService;
 import org.springframework.stereotype.Component;
