@@ -120,6 +120,7 @@ public class OrderServiceImpl implements OrderService {
             ProductEntity productEntity = this.productRepository.findById(productId)
                     .orElseThrow(() -> new ItemNotFoundException("Product not found!"));
             productEntity.setQuantity(productEntity.getQuantity() - 1);
+            productEntity.setTimesBought(productEntity.getTimesBought() + 1);
             productRepository.save(productEntity);
             productEntities.add(productEntity);
         }

@@ -25,6 +25,9 @@ public class ProductEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(nullable = false)
+    private int timesBought;
+
     @ManyToOne
     private ProductTypeEntity type;
 
@@ -83,4 +86,12 @@ public class ProductEntity extends BaseEntity {
         return this;
     }
 
+    public int getTimesBought() {
+        return timesBought;
+    }
+
+    public ProductEntity setTimesBought(int timesBought) {
+        this.timesBought = timesBought;
+        return this;
+    }
 }

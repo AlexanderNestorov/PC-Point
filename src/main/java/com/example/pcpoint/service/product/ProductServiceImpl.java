@@ -1,5 +1,6 @@
 package com.example.pcpoint.service.product;
 
+import com.example.pcpoint.exception.ActionForbiddenException;
 import com.example.pcpoint.exception.ItemNotFoundException;
 import com.example.pcpoint.model.entity.product.ProductEntity;
 import com.example.pcpoint.model.entity.product.ProductTypeEntity;
@@ -52,7 +53,8 @@ public class ProductServiceImpl implements ProductService {
                     .setPrice(BigDecimal.valueOf(100))
                     .setType(software)
                     .setImageUrl("software.img")
-                    .setQuantity(10);
+                    .setQuantity(10)
+                    .setTimesBought(0);
 
             ProductEntity hardwareEntity = new ProductEntity();
             hardwareEntity.setName("Hardware")
@@ -60,7 +62,8 @@ public class ProductServiceImpl implements ProductService {
                     .setPrice(BigDecimal.valueOf(200))
                     .setType(hardware)
                     .setImageUrl("hardware.img")
-                    .setQuantity(20);
+                    .setQuantity(20)
+                    .setTimesBought(0);
 
             ProductEntity accessoryEntity = new ProductEntity();
             accessoryEntity.setName("Accessory")
@@ -68,7 +71,8 @@ public class ProductServiceImpl implements ProductService {
                     .setPrice(BigDecimal.valueOf(300))
                     .setType(accessory)
                     .setImageUrl("accessory.img")
-                    .setQuantity(30);
+                    .setQuantity(30)
+                    .setTimesBought(0);
 
             ProductEntity miscEntity = new ProductEntity();
             miscEntity.setName("Misc")
@@ -76,7 +80,8 @@ public class ProductServiceImpl implements ProductService {
                     .setPrice(BigDecimal.valueOf(420))
                     .setType(misc)
                     .setImageUrl("misc.img")
-                    .setQuantity(42);
+                    .setQuantity(42)
+                    .setTimesBought(0);
 
 
             productRepository.save(softwareEntity);
@@ -115,7 +120,8 @@ public class ProductServiceImpl implements ProductService {
                 .setDescription(productAddServiceModel.getDescription())
                 .setImageUrl(productAddServiceModel.getImageUrl())
                 .setQuantity(productAddServiceModel.getQuantity())
-                .setPrice(productAddServiceModel.getPrice());
+                .setPrice(productAddServiceModel.getPrice())
+                .setTimesBought(0);
 
         String type = productAddServiceModel.getType();
 
@@ -163,6 +169,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Long id) {
+
+        if (productRepository.findAllProductsInOrders().contains(id)) {
+            throw new ActionForbiddenException("Product Entity with id " + id + " is in an order");
+        }
 
         reviewService.deleteAllReviewsByProductId(id);
         productRepository.deleteProductEntityById(id);
