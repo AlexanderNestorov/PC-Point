@@ -96,4 +96,10 @@ public class ProductController {
 
         return ResponseEntity.ok(new MessageResponse("Product deleted successfully!"));
     }
+
+    @GetMapping("/most_bought")
+    public ResponseEntity<?> getAllProductsByTimesBought() {
+        List<ProductEntity> products = this.productService.findAllByTimesBought();
+        return ResponseEntity.ok(products);
+    }
 }

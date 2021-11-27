@@ -27,4 +27,11 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     )
     List<Long> findAllProductsInOrders();
 
+    @Query(
+            value = "SELECT * FROM products p ORDER BY p.times_bought LIMIT 5",
+            nativeQuery = true
+    )
+    List<ProductEntity> findAllByTimesBought();
+
+
 }

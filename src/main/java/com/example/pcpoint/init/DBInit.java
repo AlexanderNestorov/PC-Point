@@ -1,7 +1,6 @@
 package com.example.pcpoint.init;
 
 import com.example.pcpoint.service.location.LocationService;
-import com.example.pcpoint.service.order.OrderService;
 import com.example.pcpoint.service.product.ProductService;
 import com.example.pcpoint.service.user.UserService;
 import org.springframework.boot.CommandLineRunner;

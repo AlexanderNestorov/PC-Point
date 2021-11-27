@@ -1,7 +1,5 @@
 package com.example.pcpoint.model.entity.product;
 
-
-
 import com.example.pcpoint.model.enums.ProductTypeEnum;
 
 import javax.persistence.*;

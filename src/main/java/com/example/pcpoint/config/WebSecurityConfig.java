@@ -74,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Product endpoints
                 .antMatchers("/api/product/all").permitAll()
                 .antMatchers("/api/product/find/**").permitAll()
+                .antMatchers("/api/product/most_bought").permitAll()
                 .antMatchers("/api/product/delete/**").hasRole("ADMIN")
                 .antMatchers("/api/product/add").hasRole("ADMIN")
                 .antMatchers("/api/product/update").hasRole("ADMIN")

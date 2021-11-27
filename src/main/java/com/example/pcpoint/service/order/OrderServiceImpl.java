@@ -3,7 +3,6 @@ package com.example.pcpoint.service.order;
 import com.example.pcpoint.exception.ItemNotFoundException;
 import com.example.pcpoint.model.entity.order.OrderEntity;
 import com.example.pcpoint.model.entity.product.ProductEntity;
-import com.example.pcpoint.model.entity.user.UserEntity;
 import com.example.pcpoint.model.service.order.OrderAddServiceModel;
 import com.example.pcpoint.model.service.order.OrderUpdateServiceModel;
 import com.example.pcpoint.repository.order.OrderRepository;

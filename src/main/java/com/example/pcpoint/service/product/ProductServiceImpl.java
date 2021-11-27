@@ -9,7 +9,6 @@ import com.example.pcpoint.model.service.product.ProductAddServiceModel;
 import com.example.pcpoint.model.service.product.ProductUpdateServiceModel;
 import com.example.pcpoint.repository.product.ProductRepository;
 import com.example.pcpoint.repository.product.ProductTypeRepository;
-import com.example.pcpoint.repository.review.ReviewRepository;
 import com.example.pcpoint.service.review.ReviewService;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +33,11 @@ public class ProductServiceImpl implements ProductService {
     public void initializeProductsAndTypes() {
         initializeTypes();
         initializeProducts();
+    }
+
+    @Override
+    public List<ProductEntity> findAllByTimesBought() {
+        return this.productRepository.findAllByTimesBought();
     }
 
     private void initializeProducts() {

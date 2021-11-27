@@ -1,7 +1,6 @@
 package com.example.pcpoint.repository.order;
 
 import com.example.pcpoint.model.entity.order.OrderEntity;
-import com.example.pcpoint.model.entity.review.ReviewEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
