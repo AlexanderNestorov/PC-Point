@@ -110,7 +110,7 @@ public class ProductRepositoryTest {
         assertThat(test.getName()).isEqualTo(productEntity1.getName());
         assertThat(test.getId()).isEqualTo(productEntity1.getId());
     }
-
+ 
     @Test
     @DisplayName("Testing if delete by id method works correctly")
     public void testDeleteById() {

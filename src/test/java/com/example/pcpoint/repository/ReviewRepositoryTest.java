@@ -1,7 +1,6 @@
 package com.example.pcpoint.repository;
 
 import com.example.pcpoint.exception.ItemNotFoundException;
-import com.example.pcpoint.model.entity.location.LocationEntity;
 import com.example.pcpoint.model.entity.review.ReviewEntity;
 import com.example.pcpoint.repository.product.ProductRepository;
 import com.example.pcpoint.repository.review.ReviewRepository;
