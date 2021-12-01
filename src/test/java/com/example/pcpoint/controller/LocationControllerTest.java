@@ -1,5 +1,6 @@
 package com.example.pcpoint.controller;
 
+import com.example.pcpoint.exception.ItemNotFoundException;
 import com.example.pcpoint.model.entity.location.LocationEntity;
 import com.example.pcpoint.model.request.location.LocationAddRequest;
 import com.example.pcpoint.model.request.location.LocationUpdateRequest;
@@ -247,7 +248,9 @@ public class LocationControllerTest {
                         .header("Authorization", "Bearer " + adminToken))
                 .andExpect(status().isOk());
 
-        LocationEntity location = locationRepository.findByAddress("Test Address 3");
+        LocationEntity location = locationRepository.findByAddress("Test Address 3").orElseThrow(
+                () -> new ItemNotFoundException("Location with address 'Test Address 3' not found")
+        );
 
         assertThat(location.getAddress()).isEqualTo("Test Address 3");
 
@@ -314,7 +317,9 @@ public class LocationControllerTest {
                         .header("Authorization", "Bearer " + adminToken))
                 .andExpect(status().isOk());
 
-        LocationEntity location = locationRepository.findByAddress("Updated Address");
+        LocationEntity location = locationRepository.findByAddress("Updated Address").orElseThrow(
+                () -> new ItemNotFoundException("Location with address 'Updated Address' not found")
+        );
 
         assertThat(location.getAddress()).isEqualTo("Updated Address");
 
