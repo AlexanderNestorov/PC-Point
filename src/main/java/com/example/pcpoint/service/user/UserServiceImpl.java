@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -64,6 +65,7 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roles);
         return userRepository.save(user);
     }
+
 
     private void initializeAdminAndUser() {
         if (userRepository.count() == 0) {
@@ -143,6 +145,8 @@ public class UserServiceImpl implements UserService {
                 userDetails.getEmail(),
                 roles);
     }
+
+
 
     @Override
     public UserEntity findByUsername(String username) {

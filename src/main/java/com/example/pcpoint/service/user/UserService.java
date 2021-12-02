@@ -7,6 +7,8 @@ import com.example.pcpoint.model.service.user.UpdateRolesServiceModel;
 import com.example.pcpoint.model.service.user.UserLoginServiceModel;
 import com.example.pcpoint.model.service.user.UserRegisterServiceModel;
 
+import java.util.Optional;
+
 
 public interface UserService {
 
@@ -25,4 +27,6 @@ public interface UserService {
     void initializeUsersAndRoles();
 
     UserEntity updateRoles(UpdateRolesServiceModel updateRolesServiceModel);
+
+
 }
