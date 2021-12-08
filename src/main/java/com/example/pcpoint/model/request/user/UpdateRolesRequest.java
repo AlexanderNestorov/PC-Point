@@ -11,7 +11,6 @@ public class UpdateRolesRequest {
     private Long id;
 
     @Valid
-
     private List<String> roles;
 
     public Long getId() {

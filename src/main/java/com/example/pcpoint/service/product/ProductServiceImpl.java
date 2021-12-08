@@ -35,11 +35,6 @@ public class ProductServiceImpl implements ProductService {
         initializeProducts();
     }
 
-    @Override
-    public List<ProductEntity> findAllByTimesBought() {
-        return this.productRepository.findAllByTimesBought();
-    }
-
     private void initializeProducts() {
         if (productRepository.count() == 0) {
             ProductTypeEntity software = productTypeRepository.findByType(ProductTypeEnum.SOFTWARE)
@@ -56,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
                     .setDescription("Software description")
                     .setPrice(BigDecimal.valueOf(100))
                     .setType(software)
-                    .setImageUrl("software.img")
+                    .setImageUrl("https://res.cloudinary.com/hanseberg/image/upload/v1638367735/zulg9wkt2q9li6yql9es.jpg")
                     .setQuantity(10)
                     .setTimesBought(0);
 
@@ -65,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
                     .setDescription("Hardware description")
                     .setPrice(BigDecimal.valueOf(200))
                     .setType(hardware)
-                    .setImageUrl("hardware.img")
+                    .setImageUrl("https://res.cloudinary.com/hanseberg/image/upload/v1638367944/mli36wxftai6lvxvf9wv.jpg")
                     .setQuantity(20)
                     .setTimesBought(0);
 
@@ -74,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
                     .setDescription("Accessory description")
                     .setPrice(BigDecimal.valueOf(300))
                     .setType(accessory)
-                    .setImageUrl("accessory.img")
+                    .setImageUrl("https://res.cloudinary.com/hanseberg/image/upload/v1638373149/zewuxsw8q8ew3rc4oqsy.jpg")
                     .setQuantity(30)
                     .setTimesBought(0);
 
@@ -83,14 +78,44 @@ public class ProductServiceImpl implements ProductService {
                     .setDescription("Misc description")
                     .setPrice(BigDecimal.valueOf(420))
                     .setType(misc)
-                    .setImageUrl("misc.img")
+                    .setImageUrl("https://res.cloudinary.com/hanseberg/image/upload/v1638367983/bavhgezzl9n69zbvc9lk.jpg")
                     .setQuantity(42)
+                    .setTimesBought(0);
+
+            ProductEntity softwareEntity2 = new ProductEntity();
+            softwareEntity2.setName("Windows License")
+                    .setDescription("A licensed version of Windows OS")
+                    .setPrice(BigDecimal.valueOf(420.42))
+                    .setType(software)
+                    .setImageUrl("https://res.cloudinary.com/hanseberg/image/upload/v1638878987/hqrox67tuewcbghugtp0.jpg")
+                    .setQuantity(42)
+                    .setTimesBought(0);
+
+            ProductEntity hardwareEntity2 = new ProductEntity();
+            hardwareEntity2.setName("Graphics Card")
+                    .setDescription("A basic GPU")
+                    .setPrice(BigDecimal.valueOf(2000.5))
+                    .setType(hardware)
+                    .setImageUrl("https://res.cloudinary.com/hanseberg/image/upload/v1638879217/dkbs5ppcgqb8gzysdzyl.jpg")
+                    .setQuantity(25)
+                    .setTimesBought(0);
+
+            ProductEntity accessoryEntity2 = new ProductEntity();
+            accessoryEntity2.setName("Wireless Headphones")
+                    .setDescription("Wireless bud headphones")
+                    .setPrice(BigDecimal.valueOf(45.55))
+                    .setType(accessory)
+                    .setImageUrl("https://res.cloudinary.com/hanseberg/image/upload/v1638878859/kqgelcuimgocesu1uoky.jpg")
+                    .setQuantity(200)
                     .setTimesBought(0);
 
 
             productRepository.save(softwareEntity);
             productRepository.save(hardwareEntity);
             productRepository.save(accessoryEntity);
+            productRepository.save(softwareEntity2);
+            productRepository.save(hardwareEntity2);
+            productRepository.save(accessoryEntity2);
             productRepository.save(miscEntity);
         }
     }
@@ -113,6 +138,11 @@ public class ProductServiceImpl implements ProductService {
                 miscellaneous.setType(ProductTypeEnum.MISCELLANEOUS);
                 productTypeRepository.save(miscellaneous);
         }
+    }
+
+    @Override
+    public List<ProductEntity> findAllByTimesBought() {
+        return this.productRepository.findAllByTimesBought();
     }
 
     @Override
