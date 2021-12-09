@@ -14,6 +14,8 @@ public interface ProductService {
 
     ProductEntity findProductById(Long id);
 
+    ProductEntity findProductByName(String name);
+
     ProductEntity updateProduct(ProductUpdateServiceModel productUpdateServiceModel);
 
     void deleteProduct(Long id);

@@ -151,6 +151,14 @@ public class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("Testing if find by name method works correctly")
+    public void testFindByName() {
+        ProductEntity test = productService.findProductByName(productEntity1.getName());
+        assertThat(test).isNotNull();
+        assertThat(test.getName()).isEqualTo(productEntity1.getName());
+    }
+
+    @Test
     @DisplayName("Testing if delete by id method works correctly")
     public void testDeleteById() {
        productService.deleteProduct(productEntity1.getId());

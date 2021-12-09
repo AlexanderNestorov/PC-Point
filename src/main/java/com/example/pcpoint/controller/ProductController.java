@@ -38,8 +38,15 @@ public class ProductController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<?> getLocationById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getProductById(@PathVariable("id") Long id) {
         ProductEntity productEntity = this.productService.findProductById(id);
+
+        return ResponseEntity.ok(productEntity);
+    }
+
+    @GetMapping("/by_name/{name}")
+    public ResponseEntity<?> getProductByName(@PathVariable("name") String name) {
+        ProductEntity productEntity = this.productService.findProductByName(name);
 
         return ResponseEntity.ok(productEntity);
     }

@@ -178,6 +178,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductEntity findProductByName(String name) {
+        return productRepository.findProductByName(name)
+                .orElseThrow(() -> new ItemNotFoundException("Product Entity with name " + name + " was not found"));
+    }
+
+
+
+    @Override
     public ProductEntity updateProduct(ProductUpdateServiceModel productUpdateServiceModel) {
         ProductEntity product = productRepository.findById(productUpdateServiceModel.getId())
                 .orElseThrow(() -> new ItemNotFoundException("Product Entity with id " + productUpdateServiceModel.getId() + " was not found"));
