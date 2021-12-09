@@ -28,4 +28,6 @@ public interface LocationRepository extends JpaRepository<LocationEntity, Long> 
             nativeQuery = true
     )
     Optional<LocationEntity> findByAddress(String address);
+
+    Boolean existsByAddress(String address);
 }

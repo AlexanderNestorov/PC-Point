@@ -1,10 +1,7 @@
 package com.example.pcpoint.service;
 
 import com.example.pcpoint.exception.ItemNotFoundException;
-import com.example.pcpoint.model.entity.location.LocationEntity;
 import com.example.pcpoint.model.entity.review.ReviewEntity;
-import com.example.pcpoint.model.service.location.LocationAddServiceModel;
-import com.example.pcpoint.model.service.location.LocationUpdateServiceModel;
 import com.example.pcpoint.model.service.review.ReviewAddServiceModel;
 import com.example.pcpoint.model.service.review.ReviewUpdateServiceModel;
 import com.example.pcpoint.repository.product.ProductRepository;

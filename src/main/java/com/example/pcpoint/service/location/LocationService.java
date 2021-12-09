@@ -18,6 +18,8 @@ public interface LocationService {
 
     void deleteLocation(Long id);
 
+    Boolean existsByAddress(String address);
+
     List<LocationEntity> findAllLocationsByCity(String city);
 
     List<String> findAllCities();

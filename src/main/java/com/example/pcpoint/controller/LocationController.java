@@ -38,6 +38,12 @@ public class LocationController {
             return ResponseEntity.badRequest().body(new MessageResponse("Invalid location request data!"));
         }
 
+        if(locationService.existsByAddress(locationAddRequest.getAddress())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Location with this address already exists!"));
+        }
+
         LocationAddServiceModel locationAddServiceModel =
                 modelMapper.map(locationAddRequest, LocationAddServiceModel.class);
 

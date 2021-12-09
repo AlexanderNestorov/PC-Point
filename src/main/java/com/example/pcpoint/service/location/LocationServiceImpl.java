@@ -70,6 +70,11 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    public Boolean existsByAddress(String address) {
+        return locationRepository.existsByAddress(address);
+    }
+
+    @Override
     public List<LocationEntity> findAllLocationsByCity(String city) {
         return locationRepository.findAllByCity(city);
     }
