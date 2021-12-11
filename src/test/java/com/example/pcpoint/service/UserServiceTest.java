@@ -1,14 +1,12 @@
 package com.example.pcpoint.service;
 
 import com.example.pcpoint.exception.ItemNotFoundException;
-import com.example.pcpoint.model.entity.review.ReviewEntity;
 import com.example.pcpoint.model.entity.user.UserEntity;
-import com.example.pcpoint.model.service.review.ReviewAddServiceModel;
 import com.example.pcpoint.model.service.user.UserRegisterServiceModel;
 import com.example.pcpoint.repository.user.UserRepository;
 import com.example.pcpoint.repository.user.UserRoleRepository;
 import com.example.pcpoint.service.user.UserService;
-import org.h2.engine.User;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

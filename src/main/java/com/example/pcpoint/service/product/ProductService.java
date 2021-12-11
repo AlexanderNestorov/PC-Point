@@ -24,4 +24,6 @@ public interface ProductService {
 
     List<ProductEntity> findAllByTimesBought();
 
+    Boolean existsByName(String name);
+
 }

@@ -60,6 +60,10 @@ public class ProductController {
             return ResponseEntity.badRequest().body(new MessageResponse("Invalid product request data!"));
         }
 
+        if (productService.existsByName(productAddRequest.getName())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Product with this name already exists!"));
+        }
+
         ProductAddServiceModel productAddServiceModel =
                 modelMapper.map(productAddRequest, ProductAddServiceModel.class);
 

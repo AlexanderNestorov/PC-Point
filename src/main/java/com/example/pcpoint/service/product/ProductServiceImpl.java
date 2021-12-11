@@ -146,6 +146,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Boolean existsByName(String name) {
+        return this.productRepository.existsByName(name);
+    }
+
+    @Override
     public void addProduct(ProductAddServiceModel productAddServiceModel) {
         ProductEntity productEntity = new ProductEntity();
 
@@ -163,23 +168,23 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-        productRepository.save(productEntity);
+        this.productRepository.save(productEntity);
     }
 
     @Override
     public List<ProductEntity> findAllProducts() {
-        return productRepository.findAll();
+        return this.productRepository.findAll();
     }
 
     @Override
     public ProductEntity findProductById(Long id) {
-        return productRepository.findProductById(id)
+        return this.productRepository.findProductById(id)
                 .orElseThrow(() -> new ItemNotFoundException("Product Entity with id " + id + " was not found"));
     }
 
     @Override
     public ProductEntity findProductByName(String name) {
-        return productRepository.findProductByName(name)
+        return this.productRepository.findProductByName(name)
                 .orElseThrow(() -> new ItemNotFoundException("Product Entity with name " + name + " was not found"));
     }
 
@@ -187,7 +192,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity updateProduct(ProductUpdateServiceModel productUpdateServiceModel) {
-        ProductEntity product = productRepository.findById(productUpdateServiceModel.getId())
+        ProductEntity product = this.productRepository.findById(productUpdateServiceModel.getId())
                 .orElseThrow(() -> new ItemNotFoundException("Product Entity with id " + productUpdateServiceModel.getId() + " was not found"));
         if (product == null) {
             return null;
@@ -206,18 +211,18 @@ public class ProductServiceImpl implements ProductService {
         product.setType(defineType(type));
 
 
-        return productRepository.save(product);
+        return this.productRepository.save(product);
     }
 
     @Override
     public void deleteProduct(Long id) {
 
-        if (productRepository.findAllProductsInOrders().contains(id)) {
+        if (this.productRepository.findAllProductsInOrders().contains(id)) {
             throw new ActionForbiddenException("Product Entity with id " + id + " is in an order");
         }
 
-        reviewService.deleteAllReviewsByProductId(id);
-        productRepository.deleteProductEntityById(id);
+        this.reviewService.deleteAllReviewsByProductId(id);
+        this.productRepository.deleteProductEntityById(id);
     }
 
     public ProductTypeEntity defineType(String type) {
